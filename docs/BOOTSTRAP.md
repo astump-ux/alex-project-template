@@ -3,6 +3,8 @@
 > Step-by-step checklist for spinning up a new project using `alex-project-template`.
 > Goal: from "I have an idea" to "deployed Vercel preview" in 30 minutes.
 
+> **Prerequisites:** Git installed locally, Node 24.x, npm. If this is a new machine, see `docs/DEV_ENV.md` first.
+
 ---
 
 ## Step 1 — Clone the template
