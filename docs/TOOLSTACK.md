@@ -18,7 +18,8 @@ For a new project, read these files in order before writing any code:
 2. **`docs/MCP_INVENTORY.md`** — which MCP connectors are available and when to use them
 3. **`docs/PRD.md`** — the product requirements doc for *this specific* project
 4. **`docs/BOOTSTRAP.md`** — the 10-step checklist for starting a new project
-5. **`CLAUDE.md`** — project-specific architecture notes
+5. **`docs/DEV_ENV.md`** — what to install on a new machine to work with this template (per-machine setup, separate from per-project setup)
+6. **`CLAUDE.md`** — project-specific architecture notes
 
 ---
 
