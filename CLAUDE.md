@@ -110,7 +110,32 @@ Next.js 16 (App Router) · TypeScript · Tailwind 4 · shadcn/ui · Supabase (Po
 
 ---
 
-## 10. Update Log
+## 10. Working with this project in Cowork / Claude Code
+
+### Read operations
+The default GitHub Custom Connector (`api.githubcopilot.com/mcp/` via OAuth) handles
+all read operations: browsing files, reading code, listing issues/PRs, viewing
+commits. No extra setup needed once the connector is added in Claude Desktop
+→ Settings → Connectors.
+
+### Write operations (commits, pushes, branches, PRs, issue updates)
+The default connector is **read-only by design**. For any write operation, invoke
+the user-level skill **`github-write-setup`** at the start of the Cowork session:
+
+> "github write setup"  *(or any of the trigger phrases in the skill)*
+
+It walks through creating a scoped Personal Access Token, wires up `gh` CLI + `git`
+in the bash sandbox, and verifies the auth. The PAT is **session-scoped** (Cowork
+sandboxes don't persist across sessions). Revoke the PAT after the session via
+https://github.com/settings/personal-access-tokens.
+
+If you need persistent write access without re-supplying a PAT each session, the
+alternative is self-hosting `github-mcp-server` via Docker — see that project's
+docs at https://github.com/github/github-mcp-server.
+
+---
+
+## 11. Update Log
 
 | Date | Change |
 |---|---|
