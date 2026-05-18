@@ -4,6 +4,7 @@
   "description": "Project template for new web apps (SMART work labs GmbH)",
   "private": true,
   "scripts": {
+    "init": "node scripts/init.mjs",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

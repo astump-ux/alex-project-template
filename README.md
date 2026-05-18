@@ -14,12 +14,14 @@ See **[`docs/BOOTSTRAP.md`](docs/BOOTSTRAP.md)** for the full 10-step checklist.
 TL;DR:
 
 1. Click **"Use this template"** on GitHub
-2. Create new repo: `<your-project-name>`
-3. Replace `[PROJECT NAME]` placeholders in `CLAUDE.md`, `README.md`, `docs/PRD.md`
-4. Delete optional modules you don't need (`docs/modules/*.md`)
-5. Create matching Supabase + Vercel + Sentry projects (use the MCPs)
-6. Fill in Vercel env vars (template is in `.env.local.example`)
-7. `git push origin main` → first deploy
+2. Create new repo: `<your-project-name>` and clone it locally
+3. Run **`npm install && npm run init <your-project-name> --keep ai`**
+   This replaces all `[PROJECT NAME]` placeholders, sets `package.json` name,
+   and removes unused docs/modules. Use `--keep ai,stripe,twilio` to control which
+   module docs are kept; the rest are deleted.
+4. Create matching Supabase + Vercel + Sentry projects (use the MCPs)
+5. Fill in Vercel env vars (template is in `.env.local.example`)
+6. `git push origin main` → first deploy
 
 ---
 
