@@ -16,7 +16,7 @@ TL;DR:
 1. Click **"Use this template"** on GitHub
 2. Create new repo: `<your-project-name>` and clone it locally
 3. Run **`npm install && npm run init <your-project-name> --keep ai`**
-   This replaces all `[PROJECT NAME]` placeholders, sets `package.json` name,
+   This replaces all template placeholders, sets `package.json` name,
    and removes unused docs/modules. Use `--keep ai,stripe,twilio` to control which
    module docs are kept; the rest are deleted.
 4. Create matching Supabase + Vercel + Sentry projects (use the MCPs)

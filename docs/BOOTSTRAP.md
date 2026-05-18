@@ -24,29 +24,44 @@ cd <your-project-name>
 
 ---
 
-## Step 2 — Find-and-replace the template placeholders
+## Step 2 — Run the init script (placeholders + module pruning in one go)
 
-The template uses `[PROJECT NAME]` as a placeholder. Replace it with your real project name in:
-- `CLAUDE.md` (multiple occurrences)
-- `README.md`
-- `docs/PRD.md`
+The template ships with `scripts/init.mjs` that automates the previously-manual
+placeholder replacement and module pruning. Run:
 
-In your IDE: project-wide find-and-replace `[PROJECT NAME]` → `<Your Project Name>`.
+```bash
+npm install
+npm run init <your-project-name> --keep ai
+```
+
+What this does:
+- Replaces all placeholder strings in `CLAUDE.md`, `README.md`, `docs/BOOTSTRAP.md`,
+  and `next.config.ts`
+- Sets `name` in `package.json` to `<your-project-name>`
+- Deletes `docs/modules/*.md` files for modules NOT in your `--keep` list
+
+The `--keep` flag is comma-separated. Available modules: `ai`, `stripe`, `twilio`.
+Omit `--keep` entirely to keep all module docs.
+
+Examples:
+```bash
+npm run init my-billing-app --keep ai,stripe
+npm run init my-comms-app --keep twilio
+npm run init my-internal-tool          # keeps everything
+```
+
+After the script runs:
+```bash
+git add -A && git commit -m "chore: initialize <your-project-name>"
+```
 
 ---
 
-## Step 3 — Decide which optional modules you need
+## Step 3 — For each module you kept, activate it
 
-Read `docs/TOOLSTACK.md` Section 1 → "Optional modules enabled in this project".
-
-For each module you don't need, **delete the relevant files**:
-- **No Stripe?** Delete `docs/modules/stripe.md` and `src/lib/stripe.ts.template`
-- **No AI?** Delete `docs/modules/ai.md` and `src/lib/ai-client.ts.template`
-- **No Twilio?** Delete `docs/modules/twilio.md` and `src/lib/twilio.ts.template`
-
-For each module you need:
-- Rename `.template` files to remove the `.template` suffix
-- Follow the setup steps in the module's `docs/modules/<name>.md`
+For each module in your `--keep` list:
+- Rename the corresponding `.template` file in `src/lib/` to remove the `.template` suffix
+- Follow the setup steps in `docs/modules/<name>.md`
 - Add the module to the "Optional modules enabled" checklist in `CLAUDE.md`
 
 ---
