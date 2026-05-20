@@ -1,0 +1,9 @@
+MCP write access verified via npx-based github-mcp.
+
+Timestamp: 2026-05-20T14:35Z
+Method: classic PAT with full repo scope, configured in claude_desktop_config.json
+MCP: mcp__github__* (npx @modelcontextprotocol/server-github)
+
+This file is safe to delete via the GitHub web UI (Trash icon at top right).
+It exists only as proof that the MCP can perform write operations after
+the token rotation on 2026-05-20.
