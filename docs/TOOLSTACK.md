@@ -4,7 +4,7 @@
 > AI assistants and developers should read this before making any architecture or tooling decisions.
 > Update this document when conventions change, not when individual projects do.
 
-**Last updated:** 2026-05-14
+**Last updated:** 2026-06-24
 **Owner:** Alexander Stump
 **Legal entity:** SMART work labs GmbH
 
@@ -340,6 +340,7 @@ See `docs/MCP_INVENTORY.md` for the full list with usage rules. Quick summary:
 
 | MCP | Purpose | Default behavior |
 |---|---|---|
+| **GitHub (write-enabled MCP connector)** | Repo reads **and** writes: browse/read files, commits, pushes, branches, PRs, issues | Use for **ALL** git ops, remote-first against `origin/main`. **NOT** the default OAuth GitHub connector — that one only sees *public* repos and returns **404 on private repos** (looks like a missing grant, is actually the wrong connector). See `CLAUDE.md` §10. |
 | Vercel | Project + deploy management | Use freely for the current project |
 | Supabase | DB queries + migrations | Use freely for the current project |
 | Stripe | Read products / customers / payments | Read-only freely; write actions need confirmation |
