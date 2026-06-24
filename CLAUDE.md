@@ -112,26 +112,28 @@ Next.js 16 (App Router) · TypeScript · Tailwind 4 · shadcn/ui · Supabase (Po
 
 ## 10. Working with this project in Cowork / Claude Code
 
+### Git source of truth: ALWAYS the cloud GitHub repo (convention)
+
+**Use the write-enabled GitHub MCP connector for every Git operation — reads *and* writes — against `github.com/astump-ux/[PROJECT NAME]`.** This is the standing convention; do not deviate. Treat the project as **remote-first**: read from and write to `origin/main` via the MCP connector. Any local clone is **not** the source of truth.
+
+**Do NOT commit or push via the local sandbox git.** The Cowork bash sandbox mounts the working folder, but that mount has shown stale / truncated file views that lag the editor/file tools. Push content verified via the file tools (Read/Write), not via the sandbox mount.
+
 ### Read operations
-The default GitHub Custom Connector (`api.githubcopilot.com/mcp/` via OAuth) handles
-all read operations: browsing files, reading code, listing issues/PRs, viewing
-commits. No extra setup needed once the connector is added in Claude Desktop
-→ Settings → Connectors.
+The write-enabled GitHub MCP connector handles all reads: browsing files, reading code, listing issues/PRs, viewing commits.
 
 ### Write operations (commits, pushes, branches, PRs, issue updates)
-The default connector is **read-only by design**. For any write operation, invoke
-the user-level skill **`github-write-setup`** at the start of the Cowork session:
+Use the **same write-enabled GitHub MCP connector**. Commit style per `docs/TOOLSTACK.md` §13 (sprint-based + conventional commits; add `Co-Authored-By: Claude <noreply@anthropic.com>` for AI-assisted commits). A push/merge to `main` auto-deploys via Vercel. Once write access is confirmed for the repo, drop a `.mcp-write-verified.txt` marker in the repo root so future sessions know the connector is already wired and skip any setup detour.
 
-> "github write setup"  *(or any of the trigger phrases in the skill)*
+### ⚠️ Connector gotcha — read this before concluding "no access"
 
-It walks through creating a scoped Personal Access Token, wires up `gh` CLI + `git`
-in the bash sandbox, and verifies the auth. The PAT is **session-scoped** (Cowork
-sandboxes don't persist across sessions). Revoke the PAT after the session via
-https://github.com/settings/personal-access-tokens.
+There are **two** GitHub integrations available, and only one works for private repos:
 
-If you need persistent write access without re-supplying a PAT each session, the
-alternative is self-hosting `github-mcp-server` via Docker — see that project's
-docs at https://github.com/github/github-mcp-server.
+- The default **OAuth GitHub connector sees only *public* repos.** On a private repo it returns a **404** — which *looks* like "no access / the repo wasn't granted to the app," but is really just "wrong connector." It will also list only the public repos under `astump-ux`, making a private repo look like it doesn't exist.
+- The **write-enabled GitHub MCP connector** has full read+write access to the private `astump-ux` repos.
+
+**Rule of thumb:** a `404` (or "repo not found") on a repo you *know* exists is **not** a missing access grant — it means you're on the OAuth connector. Switch to the write-enabled GitHub MCP connector and the repo is right there. Do **not** ask the user to "freigeben in den GitHub-App-Einstellungen" — switch connectors instead.
+
+> The earlier **PAT / `github-write-setup` skill** workaround is **retired.** The write-enabled MCP connector provides persistent read+write access, so no per-session PAT is needed — and stale PATs were themselves a failure source ("Invalid username or token").
 
 ---
 
@@ -139,4 +141,5 @@ docs at https://github.com/github/github-mcp-server.
 
 | Date | Change |
 |---|---|
+| 2026-06-24 | §10 rewritten: GitHub workflow standardized on the **write-enabled GitHub MCP connector** for reads + writes (remote-first against `origin/main`). Documented the OAuth-connector "404-on-private = wrong connector, not a missing grant" gotcha; retired the PAT / `github-write-setup` workaround. |
 | YYYY-MM-DD | Project initialized from `alex-project-template` |
