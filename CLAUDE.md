@@ -118,6 +118,16 @@ Next.js 16 (App Router) · TypeScript · Tailwind 4 · shadcn/ui · Supabase (Po
 
 **Do NOT commit or push via the local sandbox git.** The Cowork bash sandbox mounts the working folder, but that mount has shown stale / truncated file views that lag the editor/file tools. Push content verified via the file tools (Read/Write), not via the sandbox mount.
 
+### Specs & docs live in the repo — Drive only mirrors
+
+**All specs and docs are committed to this Cloud repo, and the repo is canonical.** That means:
+
+- **Architectural docs** in `docs/` (this file, `TOOLSTACK.md`, `MCP_INVENTORY.md`, `PRD.md`, ADRs, research notes).
+- **Feature specs** at **`docs/spec/<PROJ-ID>_<slug>.md`** — one file per feature, tracked in `features/INDEX.md` (the `Spec` column links to it). The `/requirements` skill writes the spec here and registers it in the INDEX.
+- `CLAUDE.md` and `features/INDEX.md` themselves.
+
+Google Drive's `01_Specs & Planung` folder (see `docs/TOOLSTACK.md` §10) holds **exports / human-readable copies only** — never the source of truth. **If a spec or doc exists only in Drive or in chat, it isn't real yet — commit it to the repo.**
+
 ### Read operations
 The write-enabled GitHub MCP connector handles all reads: browsing files, reading code, listing issues/PRs, viewing commits.
 
@@ -141,5 +151,6 @@ There are **two** GitHub integrations available, and only one works for private 
 
 | Date | Change |
 |---|---|
+| 2026-06-24 | §10: documented that **all specs & docs are committed to the Cloud repo (canonical)** — feature specs at `docs/spec/<PROJ-ID>_*.md`, tracked in `features/INDEX.md`; Google Drive `01_Specs & Planung` holds only exports/mirrors. |
 | 2026-06-24 | §10 rewritten: GitHub workflow standardized on the **write-enabled GitHub MCP connector** for reads + writes (remote-first against `origin/main`). Documented the OAuth-connector "404-on-private = wrong connector, not a missing grant" gotcha; retired the PAT / `github-write-setup` workaround. |
 | YYYY-MM-DD | Project initialized from `alex-project-template` |
